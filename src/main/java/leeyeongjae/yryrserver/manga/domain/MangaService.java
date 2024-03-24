@@ -40,7 +40,7 @@ public class MangaService {
 
     @Transactional
     public void updateManga(Integer mangaId, MangaUpdateRequestDto mangaUpdateRequestDto){
-        Manga manga=mangaRepository.findById(mangaUpdateRequestDto.getMangaId())
+        Manga manga=mangaRepository.findById(mangaId)
                 .orElseThrow(()-> new MangaNotFoundException("만화를 찾을 수 없습니다."));
 
         manga.updateManga(mangaUpdateRequestDto.getTitle(),mangaUpdateRequestDto.getContent());
@@ -68,7 +68,7 @@ public class MangaService {
 
         return mangaRepository.findByArtist(artist)
                 .stream()
-                .map(manga -> MangaResponseDto.from(manga))
+                .map(MangaResponseDto::from)
                 .collect(toList());
     }
 }

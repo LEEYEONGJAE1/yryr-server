@@ -1,7 +1,6 @@
 package leeyeongjae.yryrserver.artist.domain.dto;
 
 import leeyeongjae.yryrserver.artist.domain.Artist;
-import leeyeongjae.yryrserver.manga.domain.dto.MangaResponseDto;
 import lombok.Builder;
 import lombok.Data;
 
