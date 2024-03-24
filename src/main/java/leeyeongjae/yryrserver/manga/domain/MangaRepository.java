@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface MangaRepository  extends JpaRepository<Manga, Integer> {
-    List<Manga> findbyName(String name);
     List<Manga> findByArtist(Artist artist);
 }

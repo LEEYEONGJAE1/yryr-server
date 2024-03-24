@@ -1,5 +1,51 @@
 package leeyeongjae.yryrserver.artist.domain;
 
-public class ArtistService {
+import jakarta.transaction.Transactional;
+import leeyeongjae.yryrserver.artist.domain.dto.ArtistCreateRequestDto;
+import leeyeongjae.yryrserver.artist.domain.dto.ArtistCreateResponseDto;
+import leeyeongjae.yryrserver.artist.domain.dto.ArtistResponseDto;
+import leeyeongjae.yryrserver.artist.domain.dto.ArtistUpdateRequestDto;
+import leeyeongjae.yryrserver.artist.exception.ArtistNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
+@Service
+public class ArtistService {
+    private final ArtistRepository artistRepository;
+
+    @Transactional
+    public ArtistCreateResponseDto createArtist(ArtistCreateRequestDto artistCreateRequestDto) {
+        return ArtistCreateResponseDto.builder()
+                .artistId(artistRepository.save(
+                        Artist.builder()
+                                .name(artistCreateRequestDto.getName())
+                                .content(artistCreateRequestDto.getContent())
+                                .build()
+                ).getArtistId()).build();
+    }
+
+    @Transactional
+    public ArtistResponseDto getArtist(Integer artistId) {
+        Artist artist = artistRepository.findById(artistId)
+                .orElseThrow(() -> new ArtistNotFoundException("작가를 찾을 수 없습니다."));
+
+        return ArtistResponseDto.from(artist);
+    }
+
+    @Transactional
+    public void updateArtist(Integer artistId, ArtistUpdateRequestDto artistUpdateRequestDto) {
+        Artist artist = artistRepository.findById(artistId)
+                .orElseThrow(() -> new ArtistNotFoundException("작가를 찾을 수 없습니다."));
+
+        artist.updateArtist(artistUpdateRequestDto.getName(), artistUpdateRequestDto.getContent());
+    }
+
+    @Transactional
+    public void deleteArtist(Integer artistId) {
+        Artist artist = artistRepository.findById(artistId)
+                .orElseThrow(() -> new ArtistNotFoundException("작가를 찾을 수 없습니다."));
+
+        artistRepository.delete(artist);
+    }
 }

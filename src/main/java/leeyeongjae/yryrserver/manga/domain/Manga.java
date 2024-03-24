@@ -3,12 +3,16 @@ package leeyeongjae.yryrserver.manga.domain;
 
 import jakarta.persistence.*;
 import leeyeongjae.yryrserver.artist.domain.Artist;
+import leeyeongjae.yryrserver.episode.domain.Episode;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(name = "boards")
+@Table(name = "mangas")
 @Getter
 @RequiredArgsConstructor
 public class Manga {
@@ -19,19 +23,28 @@ public class Manga {
     private Integer mangaId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "artist_id")
+    @JoinColumn(name = "artist_id", nullable = false)
     private Artist artist;
 
-    @Column(name = "name", length = 50, nullable = false)
-    private String name;
+    @OneToMany(mappedBy = "manga")
+    private List<Episode> episodeList = new ArrayList<>();
+
+    @Column(name = "title", length = 50, nullable = false)
+    private String title;
 
     @Column(name = "content", length = 1000, nullable = true)
     private String content;
 
     @Builder
-    public Manga(Artist artist,String name, String content) {
-        this.artist=artist;
-        this.name=name;
+    public Manga(Artist artist, String title, String content) {
+        this.artist = artist;
+        this.title = title;
         this.content = content;
+    }
+
+    public Manga updateManga(String title, String content) {
+        this.title = title;
+        this.content = content;
+        return this;
     }
 }

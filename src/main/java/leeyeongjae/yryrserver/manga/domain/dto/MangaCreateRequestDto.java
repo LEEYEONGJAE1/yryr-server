@@ -4,8 +4,7 @@ import lombok.Data;
 
 @Data
 public class MangaCreateRequestDto {
-    private Integer mangaId;
     private Integer artistId;
-    private String name;
+    private String title;
     private String content;
 }
