@@ -39,21 +39,6 @@ public class MangaService {
     }
 
     @Transactional
-    public void updateManga(Integer mangaId, MangaUpdateRequestDto mangaUpdateRequestDto){
-        Manga manga=mangaRepository.findById(mangaId)
-                .orElseThrow(()-> new MangaNotFoundException("만화를 찾을 수 없습니다."));
-
-        manga.updateManga(mangaUpdateRequestDto.getTitle(),mangaUpdateRequestDto.getContent());
-    }
-
-    @Transactional
-    public void deleteManga(Integer mangaId){
-        Manga manga=mangaRepository.findById(mangaId)
-                .orElseThrow(()-> new MangaNotFoundException("만화를 찾을 수 없습니다."));
-
-        mangaRepository.delete(manga);
-    }
-    @Transactional
     public MangaResponseDto getManga(Integer mangaId) {
         Manga manga=mangaRepository.findById(mangaId)
                 .orElseThrow(()-> new MangaNotFoundException("만화를 찾을 수 없습니다."));
@@ -71,4 +56,27 @@ public class MangaService {
                 .map(MangaResponseDto::from)
                 .collect(toList());
     }
+
+    @Transactional
+    public List<MangaResponseDto> getAllMangaList() {
+        return mangaRepository.findAll().stream()
+                .map(MangaResponseDto::from)
+                .collect(toList());
+    }
+    @Transactional
+    public void updateManga(Integer mangaId, MangaUpdateRequestDto mangaUpdateRequestDto){
+        Manga manga=mangaRepository.findById(mangaId)
+                .orElseThrow(()-> new MangaNotFoundException("만화를 찾을 수 없습니다."));
+
+        manga.updateManga(mangaUpdateRequestDto.getTitle(),mangaUpdateRequestDto.getContent());
+    }
+
+    @Transactional
+    public void deleteManga(Integer mangaId){
+        Manga manga=mangaRepository.findById(mangaId)
+                .orElseThrow(()-> new MangaNotFoundException("만화를 찾을 수 없습니다."));
+
+        mangaRepository.delete(manga);
+    }
+
 }

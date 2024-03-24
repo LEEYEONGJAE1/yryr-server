@@ -34,6 +34,11 @@ public class MangaController {
         return mangaService.getMangaListByArtistId(artistId);
     }
 
+    @GetMapping(value = "/list")
+    public List<MangaResponseDto> getAllMangaList(){
+        return mangaService.getAllMangaList();
+    }
+
     @PutMapping(value = "/{mangaId}")
     public void updateManga(@PathVariable Integer mangaId, @RequestBody MangaUpdateRequestDto mangaUpdateRequestDto) {
         mangaService.updateManga(mangaId, mangaUpdateRequestDto);
