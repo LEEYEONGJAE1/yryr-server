@@ -24,31 +24,32 @@ public class MangaService {
     private final ArtistRepository artistRepository;
 
     @Transactional
-    public MangaCreateResponseDto createManga(MangaCreateRequestDto mangaCreateRequestDto){
-        Artist artist=artistRepository.findById(mangaCreateRequestDto.getArtistId())
+    public MangaCreateResponseDto createManga(MangaCreateRequestDto mangaCreateRequestDto) {
+        Artist artist = artistRepository.findById(mangaCreateRequestDto.getArtistId())
                 .orElseThrow(() -> new ArtistNotFoundException("작가를 찾을 수 없습니다."));
 
         return MangaCreateResponseDto.builder()
-            .mangaId(mangaRepository.save(
-                Manga.builder()
-                    .artist(artist)
-                    .title(mangaCreateRequestDto.getTitle())
-                    .content(mangaCreateRequestDto.getContent())
-                    .build()
-            ).getMangaId()).build();
+                .mangaId(mangaRepository.save(
+                        Manga.builder()
+                                .artist(artist)
+                                .title(mangaCreateRequestDto.getTitle())
+                                .content(mangaCreateRequestDto.getContent())
+                                .thumbnailUrl(mangaCreateRequestDto.getThumbnailUrl())
+                                .build()
+                ).getMangaId()).build();
     }
 
     @Transactional
     public MangaResponseDto getManga(Integer mangaId) {
-        Manga manga=mangaRepository.findById(mangaId)
-                .orElseThrow(()-> new MangaNotFoundException("만화를 찾을 수 없습니다."));
+        Manga manga = mangaRepository.findById(mangaId)
+                .orElseThrow(() -> new MangaNotFoundException("만화를 찾을 수 없습니다."));
 
         return MangaResponseDto.from(manga);
     }
 
     @Transactional
     public List<MangaResponseDto> getMangaListByArtistId(Integer artistId) {
-        Artist artist=artistRepository.findById(artistId)
+        Artist artist = artistRepository.findById(artistId)
                 .orElseThrow(() -> new ArtistNotFoundException("작가를 찾을 수 없습니다."));
 
         return mangaRepository.findByArtist(artist)
@@ -63,18 +64,19 @@ public class MangaService {
                 .map(MangaResponseDto::from)
                 .collect(toList());
     }
-    @Transactional
-    public void updateManga(Integer mangaId, MangaUpdateRequestDto mangaUpdateRequestDto){
-        Manga manga=mangaRepository.findById(mangaId)
-                .orElseThrow(()-> new MangaNotFoundException("만화를 찾을 수 없습니다."));
 
-        manga.updateManga(mangaUpdateRequestDto.getTitle(),mangaUpdateRequestDto.getContent());
+    @Transactional
+    public void updateManga(Integer mangaId, MangaUpdateRequestDto mangaUpdateRequestDto) {
+        Manga manga = mangaRepository.findById(mangaId)
+                .orElseThrow(() -> new MangaNotFoundException("만화를 찾을 수 없습니다."));
+
+        manga.updateManga(mangaUpdateRequestDto.getTitle(), mangaUpdateRequestDto.getThumbnailUrl(), mangaUpdateRequestDto.getContent());
     }
 
     @Transactional
-    public void deleteManga(Integer mangaId){
-        Manga manga=mangaRepository.findById(mangaId)
-                .orElseThrow(()-> new MangaNotFoundException("만화를 찾을 수 없습니다."));
+    public void deleteManga(Integer mangaId) {
+        Manga manga = mangaRepository.findById(mangaId)
+                .orElseThrow(() -> new MangaNotFoundException("만화를 찾을 수 없습니다."));
 
         mangaRepository.delete(manga);
     }

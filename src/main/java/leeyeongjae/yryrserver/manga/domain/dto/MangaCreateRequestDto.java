@@ -7,4 +7,5 @@ public class MangaCreateRequestDto {
     private Integer artistId;
     private String title;
     private String content;
+    private String thumbnailUrl;
 }

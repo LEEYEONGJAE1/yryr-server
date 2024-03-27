@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/artist")
@@ -26,11 +28,14 @@ public class ArtistController {
         return artistService.getArtist(artistId);
     }
 
+    @GetMapping(value="/list")
+    public List<ArtistResponseDto> getAllArtist(){
+        return artistService.getAllArtist();
+    }
     @PutMapping(value = "/{artistId}")
     public void updateArtist(@PathVariable Integer artistId, @RequestBody ArtistUpdateRequestDto artistUpdateRequestDto) {
         artistService.updateArtist(artistId, artistUpdateRequestDto);
     }
-
     @DeleteMapping(value = "/{artistId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteArtist(@PathVariable Integer artistId) {

@@ -10,12 +10,14 @@ public class MangaResponseDto {
     private Integer mangaId;
     private String title;
     private String content;
+    private String thumbnailUrl;
 
     public static MangaResponseDto from(Manga manga) {
         return MangaResponseDto.builder()
                 .mangaId(manga.getMangaId())
                 .title(manga.getTitle())
                 .content(manga.getContent())
+                .thumbnailUrl(manga.getThumbnailUrl())
                 .build();
     }
 }

@@ -32,18 +32,23 @@ public class Manga {
     @Column(name = "title", length = 50, nullable = false)
     private String title;
 
+    @Column(name = "thumbnail_url", length = 1000, nullable = true)
+    private String thumbnailUrl;
+
     @Column(name = "content", length = 1000, nullable = true)
     private String content;
 
     @Builder
-    public Manga(Artist artist, String title, String content) {
+    public Manga(Artist artist, String title, String thumbnailUrl, String content) {
         this.artist = artist;
         this.title = title;
+        this.thumbnailUrl = thumbnailUrl;
         this.content = content;
     }
 
-    public Manga updateManga(String title, String content) {
+    public Manga updateManga(String title, String thumbnailUrl, String content) {
         this.title = title;
+        this.thumbnailUrl = thumbnailUrl;
         this.content = content;
         return this;
     }

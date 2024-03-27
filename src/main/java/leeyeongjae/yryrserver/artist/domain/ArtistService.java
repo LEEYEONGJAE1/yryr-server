@@ -6,8 +6,13 @@ import leeyeongjae.yryrserver.artist.domain.dto.ArtistCreateResponseDto;
 import leeyeongjae.yryrserver.artist.domain.dto.ArtistResponseDto;
 import leeyeongjae.yryrserver.artist.domain.dto.ArtistUpdateRequestDto;
 import leeyeongjae.yryrserver.artist.exception.ArtistNotFoundException;
+import leeyeongjae.yryrserver.manga.domain.dto.MangaResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @Service
@@ -33,6 +38,12 @@ public class ArtistService {
         return ArtistResponseDto.from(artist);
     }
 
+    @Transactional
+    public List<ArtistResponseDto> getAllArtist(){
+        return artistRepository.findAll().stream()
+                .map(ArtistResponseDto::from)
+                .collect(toList());
+    }
     @Transactional
     public void updateArtist(Integer artistId, ArtistUpdateRequestDto artistUpdateRequestDto) {
         Artist artist = artistRepository.findById(artistId)

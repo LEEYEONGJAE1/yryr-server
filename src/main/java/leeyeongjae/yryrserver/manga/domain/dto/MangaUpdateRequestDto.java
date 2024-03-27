@@ -6,4 +6,5 @@ import lombok.Data;
 public class MangaUpdateRequestDto {
     private String title;
     private String content;
+    private String thumbnailUrl;
 }
