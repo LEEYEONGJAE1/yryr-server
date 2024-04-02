@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -53,6 +54,14 @@ public class MangaService {
                 .orElseThrow(() -> new ArtistNotFoundException("작가를 찾을 수 없습니다."));
 
         return mangaRepository.findByArtist(artist)
+                .stream()
+                .map(MangaResponseDto::from)
+                .collect(toList());
+    }
+
+    @Transactional
+    public List<MangaResponseDto> getMangaListByTitle(String title){
+        return mangaRepository.findByTitleContaining(title)
                 .stream()
                 .map(MangaResponseDto::from)
                 .collect(toList());

@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface MangaRepository  extends JpaRepository<Manga, Integer> {
     List<Manga> findByArtist(Artist artist);
+    List<Manga> findByTitleContaining(String title);
 }

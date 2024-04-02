@@ -1,10 +1,7 @@
 package leeyeongjae.yryrserver.manga.controller;
 
 import leeyeongjae.yryrserver.manga.domain.MangaService;
-import leeyeongjae.yryrserver.manga.domain.dto.MangaCreateRequestDto;
-import leeyeongjae.yryrserver.manga.domain.dto.MangaCreateResponseDto;
-import leeyeongjae.yryrserver.manga.domain.dto.MangaResponseDto;
-import leeyeongjae.yryrserver.manga.domain.dto.MangaUpdateRequestDto;
+import leeyeongjae.yryrserver.manga.domain.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +34,11 @@ public class MangaController {
     @GetMapping(value = "/list")
     public List<MangaResponseDto> getAllMangaList(){
         return mangaService.getAllMangaList();
+    }
+
+    @GetMapping(value="/search/title/{keyword}")
+    public List<MangaResponseDto> getMangaListByTitle(@PathVariable("keyword") String keyword) {
+        return mangaService.getMangaListByTitle(keyword);
     }
 
     @PutMapping(value = "/{mangaId}")
