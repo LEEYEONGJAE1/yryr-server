@@ -1,10 +1,11 @@
 package leeyeongjae.yryrserver.config;
 
-import leeyeongjae.yryrserver.auth.JwtAuthenticationFilter;
-import leeyeongjae.yryrserver.auth.JwtTokenProvider;
+import leeyeongjae.yryrserver.jwt.JwtAuthenticationFilter;
+import leeyeongjae.yryrserver.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -44,9 +45,11 @@ public class SecurityConfig {
             .sessionManagement((ss) -> ss.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests((authorizeRequests) ->
                 authorizeRequests
-                        .requestMatchers("/members/signup").permitAll()
-                        .requestMatchers("/members/signin").permitAll()
-                        .requestMatchers("/members/test").hasRole("USER")
+                        .requestMatchers("/member/**").permitAll()
+                        .requestMatchers("/token/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/artist/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/manga/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/episode/**").permitAll()
                         .anyRequest().authenticated()
             )// 3번
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)

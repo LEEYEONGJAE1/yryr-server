@@ -1,4 +1,4 @@
-package leeyeongjae.yryrserver.auth.domain.dto;
+package leeyeongjae.yryrserver.domain.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

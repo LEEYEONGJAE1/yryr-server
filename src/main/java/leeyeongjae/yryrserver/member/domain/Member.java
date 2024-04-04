@@ -13,7 +13,6 @@ import org.springframework.security.core.GrantedAuthority;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "members")
 public class Member implements UserDetails {
     @Id @GeneratedValue
     @Column(name = "member_id", updatable = false, unique = true, nullable = false)

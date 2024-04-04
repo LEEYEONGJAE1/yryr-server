@@ -2,7 +2,9 @@ package leeyeongjae.yryrserver.member.domain.dto;
 
 import leeyeongjae.yryrserver.member.domain.Member;
 import lombok.Builder;
+import lombok.Data;
 
+@Data
 @Builder
 public class MemberCreateResponseDto {
     private Integer id;
