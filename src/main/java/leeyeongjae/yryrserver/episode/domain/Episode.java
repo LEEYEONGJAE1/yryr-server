@@ -23,7 +23,7 @@ public class Episode {
     @Column(name = "title", length = 50, nullable = false)
     private String title;
 
-    @Column(name = "json_url", length = 1000, nullable = false)
+    @Column(name = "json_url", length = 1000, nullable = true)
     private String jsonUrl;
 
     @Builder
