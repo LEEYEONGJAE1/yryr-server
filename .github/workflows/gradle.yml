@@ -13,6 +13,12 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+  S3_BUCKET_NAME: yuruyuri
+  CODE_DEPLOY_APP_NAME: yryr
+  CODE_DEPLOY_GROUP_NAME: yryr
+
+
 jobs:
   build:
 
@@ -53,7 +59,7 @@ jobs:
     # - name: Build with Gradle 8.5
     #   run: gradle build
     - name: Make zip file
-      run: zip -r ./$GITHUB_SHA.zip .
+      run: zip -r ./yuruyuri.zip .
       shell: bash
 
     - name: Configure AWS credentials
@@ -64,8 +70,15 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION }}
 
     - name: Upload to S3
-      run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://yuruyuri/code/$GITHUB_SHA.zip
+      run: aws s3 cp --region ap-northeast-2 ./yuruyuri.zip s3://$S3_BUCKET_NAME/code/yuruyuri.zip
 
+    - name: Deploy to AWS EC2 from S3
+      run: |
+        aws deploy create-deployment \
+          --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
+          --deployment-config-name CodeDeployDefault.AllAtOnce \
+          --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
+          --s3-location bucket=$S3_BUCKET_NAME,key=code/yuruyuri.zip,bundleType=zip
 
   dependency-submission:
 
