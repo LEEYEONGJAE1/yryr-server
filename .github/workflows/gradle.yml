@@ -28,8 +28,9 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     
-    - uses: actions/checkout@v4
-    - run: touch /src/main/resources/application.properties
+    - uses: actions/checkout@v3
+    - run: mkdir ./src/main/resources
+    - run: touch ./src/main/resources/application.properties
     - run: echo "${{ secrets.properties }}" > ./src/main/resources/application.properties
     - run: cat ./src/main/resources/application.properties
 
