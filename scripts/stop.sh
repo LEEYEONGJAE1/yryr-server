@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PROJECT_ROOT="/home/ec2-user/apps" #코드가 주입되는 경로
+PROJECT_ROOT="/home/ec2-user/apps/yryr" #코드가 주입되는 경로
 JAR_FILE="$PROJECT_ROOT/yuruyuri.jar" #build.gradle에서 설정한 파일명으로 변경
 
 DEPLOY_LOG="$PROJECT_ROOT/deploy.log"
